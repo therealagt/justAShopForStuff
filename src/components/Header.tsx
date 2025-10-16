@@ -11,11 +11,17 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import ShopLogo from '../assets/icons/ShopLogo';
-
-const pages = ['Home', 'Products', 'Sale'];
+import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
+  const navigate = useNavigate(); 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+
+  const handleNavigation = (page: string) => {
+    const route = page.toLowerCase() === 'home' ? '/' : `/${page.toLowerCase()}`;
+    navigate(route);
+    handleCloseNavMenu();
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -24,6 +30,8 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const pages = ['Home', 'Products', 'Sale'];
 
   return (
     <AppBar position="static">
@@ -78,7 +86,7 @@ function ResponsiveAppBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handleNavigation(page)}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -109,7 +117,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleNavigation(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
