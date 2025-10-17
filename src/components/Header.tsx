@@ -10,11 +10,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
 import ShopLogo from '../assets/icons/ShopLogo';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 function ResponsiveAppBar() {
   const navigate = useNavigate(); 
+  const { getCartItemCount } = useCart();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleNavigation = (page: string) => {
@@ -55,7 +58,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            Shop for stuff.
+            Just a shop.
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -125,8 +128,13 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <IconButton sx={{ color: 'white' }}>
-              <ShoppingCartIcon />
+            <IconButton 
+              sx={{ color: 'white' }}
+              onClick={() => handleNavigation('Cart')}
+            >
+              <Badge badgeContent={getCartItemCount()} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
             </IconButton>
           </Box>
         </Toolbar>

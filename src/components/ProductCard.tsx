@@ -2,9 +2,11 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { CardActions } from '@mui/material';
+import { CardActions, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { useCart } from '../context/CartContext';
 
 interface Product {
   id: number;
@@ -20,6 +22,24 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
+  
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image
+    });
+  };
+
+  const handleWishlistToggle = () => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product.id);
+    }
+  };
   return (
     <Card sx={{ width: 275, height: 400 }}>
       <CardMedia 
@@ -35,8 +55,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Typography>${product.price}</Typography>
       </CardContent>
       <CardActions>
-              <Button size="small">+ wishlist</Button>
-              <Button size="small">+ cart</Button>
+        <IconButton onClick={handleWishlistToggle} color="secondary">
+          {isInWishlist(product.id) ? <Favorite /> : <FavoriteBorder />}
+        </IconButton>
+        <Button 
+          size="small" 
+          variant="contained" 
+          onClick={handleAddToCart}
+        >
+          Add to Cart
+        </Button>
       </CardActions>
     </Card>
   );
