@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ResponsiveAppBar from './components/Header';
 import Home from './components/Home';
 import Footer from './components/Footer';
+import Shop from './components/Shop';
+import Profile from './components/Profile';
+import Sale from './components/Sale'
 
 
 function App() {
@@ -11,8 +14,9 @@ function App() {
       <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/products" element={<div>Products Page</div>} />
-        <Route path="/sale" element={<div>Sale Page</div>} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/sale" element={<Sale />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </Router>

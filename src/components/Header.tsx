@@ -31,7 +31,7 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const pages = ['Home', 'Products', 'Sale', 'Profile'];
+  const pages = ['Home', 'Shop', 'Sale', 'Profile'];
 
   return (
     <AppBar position="static">
