@@ -1,37 +1,28 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Container } from '@mui/material';
+import { useState, useEffect } from 'react'; 
+import { Container, Grid } from '@mui/material'; 
+import ProductCard from './ProductCard'; 
 
-export default function Shop() {
+const Shop = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://fakestoreapi.com/products')
+      .then(res => res.json())
+      .then(data => setProducts(data));
+  }, []);
+
   return (
     <Container sx={{ py: 4 }}>
-    <Card sx={{ maxWidth: 275 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard Shop
-        </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Lizards im Shop
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">+ wishlist</Button>
-        <Button size="small">+ cart</Button>
-        <Button size='small'>Price</Button> 
-      </CardActions>
-    </Card>
+      <Grid container spacing={2}>
+        {products.map(product => (
+          <Grid item xs={12} sm={6} md={4} key={product.id}>
+            <ProductCard product={product} />
+          </Grid>
+        ))}
+      </Grid>
     </Container>
   );
-}
+};
 
-
+export default Shop;
